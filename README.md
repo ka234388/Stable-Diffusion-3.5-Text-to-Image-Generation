@@ -86,6 +86,3 @@ SDXL is recommended when generation speed is critical, while SD3.5 Medium is pre
 
 **Karthika Ramasamy**
 
-## License
-
-This project is for educational purposes.
