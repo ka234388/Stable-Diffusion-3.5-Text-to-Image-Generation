@@ -50,32 +50,75 @@ This project benchmarks the generation speed and quality of SD3.5 Medium against
   - **SD3.5 Medium** → Tasks prioritizing image realism and fine details
   - **SDXL** → Real-time applications, rapid prototyping, and large-scale generation
 
+## Prerequisites
+
+- Python 3.9
+- CUDA 11.8
+- cuDNN 8.6
+- Conda package manager
+- Hugging Face account with access token
+- NVIDIA GPU (Tesla T4, V100, or A100 recommended)
+
+## Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/ka234388/Stable-Diffusion-3.5-Text-to-Image-Generation.git
+cd Stable-Diffusion-3.5-Text-to-Image-Generation
+```
+
+### 2. Configure Hugging Face Token
+
+Open `evaluate.sh` and replace the placeholder with your Hugging Face token:
+
+```bash
+export HF_TOKEN="your_huggingface_token_here"
+```
+
+> **Note:** You need to request access to the SD3.5 model on [Hugging Face](https://huggingface.co/stabilityai/stable-diffusion-3.5-medium) before running.
+
+### 3. Run the Evaluation
+
+Make the script executable and run:
+
+```bash
+chmod +x evaluate.sh
+./evaluate.sh
+```
+
+## What the Script Does
+
+The `evaluate.sh` script automates the entire setup and execution:
+
+1. **Loads required modules** (Python 3.9, CUDA 11.8, cuDNN 8.6)
+2. **Checks GPU availability** via `nvidia-smi`
+3. **Creates conda environment** (`sd35_env`) if it doesn't exist
+4. **Installs PyTorch** with CUDA support
+5. **Installs dependencies** from `requirements.txt`
+6. **Runs the evaluation** script `stable_diffusion_3_5_generator.py`
+
+## Project Structure
+
+```
+├── evaluate.sh                        # Main execution script
+├── stable_diffusion_3_5_generator.py  # Image generation & benchmarking code
+├── requirements.txt                   # Python dependencies
+└── README.md                          # This file
+```
+
 ## Requirements
+
+The following packages are installed automatically via `requirements.txt`:
 
 ```
 torch
+torchvision
+torchaudio
 diffusers
 transformers
 accelerate
-```
-
-## Usage
-
-```python
-from diffusers import StableDiffusion3Pipeline
-
-pipe = StableDiffusion3Pipeline.from_pretrained(
-    "stabilityai/stable-diffusion-3.5-medium",
-    torch_dtype=torch.float16
-)
-pipe = pipe.to("cuda")
-
-image = pipe(
-    prompt="your prompt here",
-    num_inference_steps=28,
-    height=1024,
-    width=1024
-).images[0]
+datasets
 ```
 
 ## Conclusion
@@ -85,4 +128,4 @@ SDXL is recommended when generation speed is critical, while SD3.5 Medium is pre
 ## Author
 
 **Karthika Ramasamy**
-
+This project is for educational purposes.
